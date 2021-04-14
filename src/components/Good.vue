@@ -112,6 +112,9 @@ export default {
     }
     .good_name {
       color: #4b5867;
+      p{
+        justify-content: flex-start;
+      }
     }
     .good_price {
       color: #101010;

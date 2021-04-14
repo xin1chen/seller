@@ -15,9 +15,9 @@
             v-if="order.goodsList && order.goodsList.length > 0"
           >
             <Good
-              v-for="good in order.goodsList"
+              v-for="(good, index) in order.goodsList"
               :good="good"
-              :key="good.productId"
+              :key="index"
             />
           </div>
           <div
@@ -37,14 +37,15 @@
               </div>
             </div>
             <Good
-              v-for="(good, good_index) in _order.productList"
+              v-for="(good, good_index) in _order.productList.slice(0, _order.slice)"
               :good="good"
               :status="_order.status"
               :orderIndex="index"
               :goodIndex="good_index"
-              :key="good.productId"
+              :key="good_index"
               @delgood="delgood"
             />
+          <div v-if="_order.productList.length > _order.slice" class="more_goods" @click="showAllGoods(_order)">展开（共{{_order.productList.length}}件）<van-icon name="arrow-down" /></div>
           </div>
         </div>
         <OrderTotal :order="order" />
@@ -71,12 +72,16 @@ export default {
       orderType: this.$route.params.orderType,
       token: storage.get("seller").token,
       order: {},
+      //slice: 3
     };
   },
   created() {
     this.getOrderDetail();
   },
   methods: {
+    showAllGoods(order){
+      order.slice = order.productList.length;
+    },
     getOrderDetail() {
       const fm = { w: getWaimaiOrderDetail, t: getTangshiOrderDetail };
       fm[this.orderType]({
@@ -85,6 +90,9 @@ export default {
       }).then((resdata) => {
         const { code, data } = resdata;
         if (code == "0") {
+          data.orderList.forEach(element => {
+            element.slice = 3;
+          });
           this.order = data;
           this.true_pay = this.order.realAmount;
           this.order.orderType = this.$route.params.orderType;
@@ -153,6 +161,12 @@ export default {
           .item_op a {
             color: #999999;
             padding: 12px;
+          }
+          .more_goods{
+            text-align: center;
+            color: #999;
+            font-size: 13px;
+            padding: 3px 0 12px;
           }
         }
       }
