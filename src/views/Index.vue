@@ -138,15 +138,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.index {
-  padding-top: 12px;
-  padding-bottom: 62px;
-  min-height: calc(100vh - 74px);
-}
 .van-row {
   padding: 0 12px;
 }
 .admin_info {
+  margin-top: 12px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -185,7 +181,7 @@ export default {
 }
 
 .line_split {
-  background: #f8f8f8;
+  background: #f3f3f3;
   padding: 12px;
   margin: 20px 0;
   div {

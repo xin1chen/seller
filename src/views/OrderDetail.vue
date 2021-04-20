@@ -21,6 +21,7 @@
             />
           </div>
           <div
+            v-else
             v-for="(_order, index) in order.orderList"
             :key="index"
             class="detail_item"
@@ -72,7 +73,6 @@ export default {
       orderType: this.$route.params.orderType,
       token: storage.get("seller").token,
       order: {},
-      //slice: 3
     };
   },
   created() {
@@ -90,7 +90,7 @@ export default {
       }).then((resdata) => {
         const { code, data } = resdata;
         if (code == "0") {
-          data.orderList.forEach(element => {
+          data.orderList && data.orderList.forEach(element => {
             element.slice = 3;
           });
           this.order = data;

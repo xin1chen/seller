@@ -87,10 +87,10 @@ export default {
     color: #333;
     .label {
       color: #999999;
-      width: 70px;
+      width: 73px;
     }
     .value {
-      width: calc(100% - 70px);
+      width: calc(100% - 73px);
       text-align: right;
       overflow: hidden;
       text-overflow: ellipsis;

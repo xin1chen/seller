@@ -8,8 +8,12 @@
     >
       <div class="order_title">
         <div class="order_sn">订单号: {{ order.tradeId }}</div>
-        <span v-if="order.orderType == 't'" class="table_no">桌号：{{order.tableNo}}</span>
-        <span class="order_status" :class="{ ing }">{{ orderStatusText }}</span>
+        <span v-if="order.orderType == 't'" class="table_no"
+          >桌号：{{ order.tableNo }}</span
+        >
+        <span class="order_status" :class="{ ing }">{{
+          order.status | orderStatusText
+        }}</span>
       </div>
       <div class="order_goods">
         <div class="order_goods_list">
@@ -20,7 +24,7 @@
           >
             <img :src="good.img" />
           </div>
-       <div class="good_info" v-if="order.productList.length == 1">
+          <div class="good_info" v-if="order.productList.length == 1">
             <div class="good_name">{{ order.productList[0].productName }}</div>
             <div class="good_desc">{{ order.productList[0].remark }}</div>
           </div>
@@ -43,14 +47,25 @@
       class="order_operate"
       v-if="order.status != 100 && order.status != 1052"
     >
-      <a class="order_pay" v-if="order.status == 102 && order.orderType == 't'" @click="pay">支付</a>
+      <a
+        class="order_pay"
+        v-if="order.status == 102 && order.orderType == 't'"
+        @click="pay"
+        >支付</a
+      >
       <a class="order_delivery" v-if="order.status == 1031" @click="send"
         >配送</a
       >
       <a class="order_delivery" v-if="order.status == 1035" @click="complete"
         >提货</a
       >
-      <a class="order_cancel" v-if="order.orderType == 'w' && (order.status == 102 || order.status == 1031)" @click="cancel"
+      <a
+        class="order_cancel"
+        v-if="
+          order.orderType == 'w' &&
+          (order.status == 102 || order.status == 1031)
+        "
+        @click="cancel"
         >取消订单</a
       >
     </div>
@@ -70,18 +85,15 @@ export default {
     send() {
       this.$emit("send", this.order.tradeId);
     },
-    complete(){
+    complete() {
       this.$emit("complete", this.order.tradeId);
     },
     cancel() {
       this.$emit("cancel", this.order.tradeId);
     },
   },
-  computed: {
-    ing: function () {
-      return this.order.status !== 100 && this.order.status !== 1052;
-    },
-    orderStatusText: function () {
+  filters: {
+    orderStatusText: function (status) {
       var statuses = {
         100: "已完成",
         102: "待付款",
@@ -90,7 +102,12 @@ export default {
         1035: "待提货",
         1052: "订单取消",
       };
-      return statuses[this.order.status];
+      return statuses[status];
+    },
+  },
+  computed: {
+    ing: function () {
+      return this.order.status !== 100 && this.order.status !== 1052;
     },
   },
 };

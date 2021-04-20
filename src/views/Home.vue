@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="home">
     <router-view />
     <Nav />
   </div>
@@ -18,7 +18,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.main{
+.home{
+  height: calc(100% - 50px);
   padding: 0;
   font-size: 14px;
   background: #fafafa;
