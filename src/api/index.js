@@ -4,8 +4,8 @@ import {
     upload
 } from './helpers'
 const urlMap = {
-    development: ["http://47.116.128.207:8081/wechat/merchant/", 'http://ad.menupls.ixiaoguo.com.cn/'],
-    production: ["http://47.116.128.207:8081/wechat/merchant/", 'http://ad.menupls.ixiaoguo.com.cn/']
+    development: ["http://api.menupls.my/", 'http://ad.menupls.my/'],
+    production: ["http://api.menupls.my/", 'http://ad.menupls.my/']
 }
 const baseUrl = urlMap[process.env.NODE_ENV]
 

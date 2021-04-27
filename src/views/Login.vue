@@ -41,19 +41,29 @@
 </template>
 <script>
 import { login } from "@/api";
+import { Toast } from "vant";
 import storage from "@/model/storage";
 export default {
   data() {
     return {
-      loginAccount: "menupls",
-      operatorName: "zhong",
-      loginPwd: "123456",
+      loginAccount: "",
+      operatorName: "",
+      loginPwd: "",
       seller: {},
     };
   },
   methods: {
     onSubmit(values) {
       login(values).then((seller) => {
+        console.log(seller);
+        if (!seller) {
+          Toast.fail("登录失败");
+          return;
+        }
+        if(seller.code != "0"){
+          Toast.fail(seller.desc);
+          return;
+        }
         this.seller = Object.assign({}, this.seller, seller.data);
         storage.set("seller", this.seller);
         this.$store.commit("storeseller", {

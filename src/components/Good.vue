@@ -63,7 +63,9 @@ export default {
   methods: {
     delGood() {
       Dialog.confirm({
-        getContainer: function(){return document.querySelector(".order_wrapper")},
+        getContainer: function () {
+          return document.querySelector(".order_wrapper");
+        },
         message: `确定要删除<span> ${this.good.productName} </span>吗？`,
       })
         .then(() => {
@@ -112,7 +114,7 @@ export default {
     }
     .good_name {
       color: #4b5867;
-      p{
+      p {
         justify-content: flex-start;
       }
     }
@@ -144,10 +146,7 @@ export default {
     }
   }
 }
-/deep/.van-swipe-cell__right {
-  .van-button {
-    height: 100%;
-  }
+.delete-button {
+  height: 100%;
 }
-
 </style>
